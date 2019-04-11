@@ -271,7 +271,7 @@ impl Message {
 		assert!(params.ttl > 0);
 
 		let expiry = {
-			let after_mining = SystemTime::now().checked_sub(Duration::from_millis(params.work))
+			let after_mining = SystemTime::now().checked_add(Duration::from_secs(params.ttl))
 				.ok_or(Error::TimestampOverflow)?;
 			let since_epoch = after_mining.duration_since(time::UNIX_EPOCH)
 				.expect("time after now is after unix epoch; qed");
